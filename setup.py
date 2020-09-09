@@ -74,6 +74,7 @@ setup(
             "ldap-users = cds_ils.ldap.cli:ldap_users",
             "migration = cds_ils.migrator.cli:migration",
             "fixtures = cds_ils.cli:fixtures",
+            "roles = cds_ils.cli:roles",
         ],
         "invenio_db.models": ["cds_ils = cds_ils.ldap.models"],
         "invenio_admin.views": [

@@ -11,7 +11,7 @@ import os
 import click
 import redis
 from flask.cli import with_appcontext
-from invenio_accounts.models import User
+from invenio_accounts.models import User, Role
 from invenio_app_ils.cli import minter
 from invenio_app_ils.locations.api import LOCATION_PID_TYPE, Location
 from invenio_app_ils.locations.indexer import LocationIndexer
@@ -165,3 +165,28 @@ def vocabularies():
     run_command("vocabulary index json --force {}".format(json_files))
     run_command("vocabulary index opendefinition spdx --force")
     run_command("vocabulary index opendefinition opendefinition --force")
+
+@click.group()
+def roles():
+    """Role commands."""
+
+@roles.command('add')
+@click.argument('user')
+@click.argument('role')
+@with_appcontext
+def rolesadd(user, role):
+    """Add user to role."""
+    with db.session.begin_nested():
+        userDB = User.query.filter_by(email=user).first()
+        if userDB is None:
+            raise click.UsageError('Cannot find user.')
+        roleDB = Role.query.filter_by(name=role).first()
+        if roleDB is None:
+            raise click.UsageError('Cannot find role')
+        if roleDB in userDB.roles:
+            raise click.UsageError('The user already has that role')  
+        
+        userDB.roles.append(roleDB)
+        click.secho('Role "{0}" added to user "{1}" '
+                    'successfully.'.format(role, user), fg='green')  
+    db.session.commit()
