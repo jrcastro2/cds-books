@@ -612,3 +612,8 @@ CDS_ILS_LDAP_URL = "ldap://xldap.cern.ch"
 CDS_ILS_SYNDETIC_CLIENT = "CHANGE_ME"
 #: EzProxy URL
 CDS_ILS_EZPROXY_URL = "https://ezproxy.cern.ch/login?url={url}"
+#: Importer
+IMPORTER_UPLOADS_PATH = "/home/javier/uploads"
+IMPORTER_ALLOWED_EXTENSIONS = "XML"
+IMPORTER_PROVIDERS = ["springer", "cds", "ebl"]
+IMPORTER_MODES = ["Create", "Delete"]

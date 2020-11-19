@@ -42,9 +42,9 @@ class EItemImporter(object):
     def _get_record_import_provider(self, record):
         """Get provider of the record."""
         """Get an import provider of a given document."""
-        is_imported = record["created_by"]["type"] == "import"
-        if is_imported:
-            return record["created_by"]["value"]
+        # is_imported = record["created_by"]["type"] == "import"
+        # if is_imported:
+        #     return record["created_by"]["value"]
 
     def _set_record_import_source(self, record_dict):
         """Set the provider of the record."""
@@ -133,7 +133,7 @@ class EItemImporter(object):
                     "value": self.metadata_provider,
                 },
                 "urls": self.json_data["_eitem"]["urls"],
-                "description": self.json_data["_eitem"]["description"],
+                # "description": self.json_data["_eitem"]["description"],
             }
         )
 

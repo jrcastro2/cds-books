@@ -12,7 +12,6 @@ import click
 from celery import shared_task
 from invenio_app_ils.errors import IlsValidationError
 from invenio_db import db
-
 from cds_ils.importer.parse_xml import get_records_list
 from cds_ils.importer.XMLRecordDump import XMLRecordDump
 from cds_ils.importer.XMLRecordLoader import XMLRecordDumpLoader
@@ -49,6 +48,7 @@ def import_record(data, provider, source_type=None, eager=False):
 
 def import_from_xml(sources, source_type, provider, eager=True):
     """Load xml file."""
+    records = []
     for idx, source in enumerate(sources, 1):
         click.echo(
             "({}/{}) Importing documents in {}...".format(
@@ -76,6 +76,7 @@ def import_from_xml(sources, source_type, provider, eager=True):
                     ),
                     fg="blue",
                 )
+                records.append(report)
 
         except IlsValidationError as e:
             records_logger.error(
@@ -89,3 +90,5 @@ def import_from_xml(sources, source_type, provider, eager=True):
                 "@FILE: {0} ERROR: {1}".format(source.name, str(e))
             )
             raise e
+
+    return records

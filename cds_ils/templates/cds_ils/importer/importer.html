@@ -1,0 +1,60 @@
+{% block main %}
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Importer</title>
+</head>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Importer</h1>
+      <hr />
+      <form action="/api/importer" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <br />
+          <div class="custom-label">
+            <b>Provider</b>
+          </div>
+          <select name="provider">
+            {% for provider in providers %}
+            <option value="{{provider}}">{{provider}}</option>
+            {% endfor %}
+          </select>
+          <br />
+          <br />
+          <div class="custom-label">
+            <b>Mode</b>
+          </div>
+          {% for mode in modes %}
+          <input type="radio" name="mode" value="{{mode}}" />{{mode}}
+          {% endfor %}
+          <br />
+          <br />
+          <div class="custom-label">
+            <b>File</b>
+          </div>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" accept=".xml" name="file" id="file" />
+          </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <br />
+        <br />
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+          <li class="color-blue">{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
